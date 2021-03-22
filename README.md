@@ -26,3 +26,5 @@
 5. As an alternative to 3 and 4, simply run ./dev_all.sh to start both servers (backend as a background process). Not super good for finding error messages though.
 
 http://localhost:5001 should show the svelte-client app.
+
+http://localhost:5000 should show the flask app.
