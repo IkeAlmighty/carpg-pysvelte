@@ -20,14 +20,6 @@
     margin: 0 auto;
   }
 
-  .d-block {
-    display: block;
-  }
-
-  .text-small {
-    font-size: smaller;
-  }
-
   @media (min-width: 640px) {
     main {
       max-width: none;

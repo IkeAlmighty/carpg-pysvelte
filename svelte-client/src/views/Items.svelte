@@ -9,7 +9,7 @@
   onMount(async () => {
     axios.get(`${API_URI}/items`).then((res) => {
       items = res.data;
-      console.log(items)
+      console.log(items);
     });
   });
 </script>
@@ -17,18 +17,37 @@
 <div>
   Items:
   <div class="d-block">
-    <ul>
+    <ul class="itemframe">
       {#each items as item}
         <li>
-          {item[0]}
+          <strong>{item[0]}</strong>
           <div class="d-block text-small">
-            {item[1]}
+            Description: {item[1]}
           </div>
           <div class="d-block text-small">
             {item[2]} lbs
+          </div>
+          <div class="d-block text-small">
+            <strong>Spell:</strong> {item[3][0]}
           </div>
         </li>
       {/each}
     </ul>
   </div>
 </div>
+
+<style>
+
+  .itemframe {
+    width: 250px;
+    text-justify:distribute;
+  }
+
+  .d-block {
+    display: block;
+  }
+
+  .text-small {
+    font-size: smaller;
+  }
+</style>

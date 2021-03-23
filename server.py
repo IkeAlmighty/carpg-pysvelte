@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 import importlib
 import json
@@ -9,7 +9,7 @@ CORS(app)
 
 @app.route('/api/<resource>')
 def call_api(resource):
-    res = importlib.import_module("api.{}".format(resource)).get()
+    res = importlib.import_module("api.{}".format(resource)).get(request)
     return json.dumps(res)
 
 
