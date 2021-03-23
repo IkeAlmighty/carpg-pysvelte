@@ -5,6 +5,6 @@
 
 # to add another api endpoint simply
 # create a new module in the api package
-# and add a function called handle(): to it.
-def handle():
+# and add a function called get(): to it.
+def get():
   return 'hello!'
