@@ -13,6 +13,10 @@ def get(request):
     limit = 100
     if request.args.get('limit'):
         limit = int(request.args.get('limit'))
+    
+    spellchance = 100
+    if request.args.get('spellchance'):
+        spellchance = int(request.args.get('spellchance'))
         
     basic_items = __googlesheets.rand_basic_values("Items", limit=limit)
 
@@ -33,10 +37,13 @@ def get(request):
         if limit >= len(spells):
             limit = len(spells)
         
-        # populat the items list with items that have spells.
+        # populate the items list with items that have spells.
         while len(basic_items) > 0 and len(items) < limit:
             full_item = basic_items.pop(random.randint(0, len(basic_items) - 1))
-            full_item.append(spells.pop(random.randint(0, len(spells) - 1)))
+            
+            if random.randint(0, 100) <= spellchance:
+                full_item.append(spells.pop(random.randint(0, len(spells) - 1)))
+            
             items.append(full_item)
             
         return items

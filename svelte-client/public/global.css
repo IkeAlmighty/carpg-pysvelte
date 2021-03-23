@@ -61,3 +61,11 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
+
+.d-block {
+	display: block;
+}
+
+.text-small {
+	font-size: smaller;
+}
