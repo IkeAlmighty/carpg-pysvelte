@@ -1,8 +1,7 @@
 <script>
   import axios from "axios";
   import ItemCard from "../components/ItemCard.svelte";
-  import { API_URI } from "../constants";
-
+  
   let items = [];
   let loadingMessage = "Click 'Generate' to create a new set of items.";
   let limit = 10;
@@ -14,7 +13,7 @@
     loadingMessage = "Loading...";
     try {
       let res = await axios.get(
-        `${API_URI}/items?limit=${limit}&spellchance=${spellchance}`
+        `_ENV_API_URI/items?limit=${limit}&spellchance=${spellchance}`
       );
       items = res.data;
     } catch (error) {

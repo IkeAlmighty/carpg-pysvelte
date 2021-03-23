@@ -1,8 +1,6 @@
 <script>
-import axios from "axios";
-import ItemCard from "../components/ItemCard.svelte";
-
-  import { API_URI } from "../constants";
+  import axios from "axios";
+  import ItemCard from "../components/ItemCard.svelte";
   import names from '../names';
 
   let name = undefined;
@@ -16,7 +14,7 @@ import ItemCard from "../components/ItemCard.svelte";
     
     inventory = undefined;
     if (characterClass === 'Artifactor' || characterClass === 'NPC') {
-      axios.get(`${API_URI}/items?limit=2&spellchance=100`).then(res=>{
+      axios.get(`_ENV_API_URI/items?limit=2&spellchance=100`).then(res=>{
         inventory = [];
         res.data.forEach(item=>inventory.push(item));
       });
