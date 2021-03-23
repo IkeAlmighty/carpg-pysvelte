@@ -66,6 +66,14 @@ button:focus {
 	display: block;
 }
 
+.my-1 {
+	margin: 10px 0;
+}
+
 .text-small {
 	font-size: smaller;
+}
+
+.container {
+	margin: 10px;
 }

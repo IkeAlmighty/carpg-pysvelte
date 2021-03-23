@@ -1,28 +1,30 @@
 <script>
   import OptionsBar from "./components/OptionsBar.svelte";
-  import Items from "./views/Items.svelte"
-  let View = undefined;
+  import Characters from "./views/Characters.svelte";
+  import Items from "./views/Items.svelte";
 </script>
 
 <main>
-  <OptionsBar />
-  {#if View}
-    <View />
-  {:else}
+  <div class="view-container">
     <Items />
-  {/if}
+    <Characters />
+  </div>
 </main>
 
 <style>
   main {
     padding: 1em;
     max-width: 240px;
-    margin: 0 auto;
   }
 
   @media (min-width: 640px) {
     main {
       max-width: none;
     }
+  }
+
+  .view-container {
+    display: flex;
+    flex-direction: row;
   }
 </style>
