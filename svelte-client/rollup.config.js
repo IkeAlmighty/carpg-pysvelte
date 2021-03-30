@@ -39,7 +39,7 @@ export default {
 	},
 	plugins: [
 		replace({
-			'_ENV_API_URI': production?'http://TODO:8080': 'http://localhost:5000/api'
+			'_ENV_API_URI': production?'/api': 'http://localhost:5000/api'
 		}),
 		svelte({
 			compilerOptions: {

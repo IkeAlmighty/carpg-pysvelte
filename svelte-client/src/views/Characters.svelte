@@ -1,11 +1,12 @@
 <script>
   import axios from "axios";
   import ItemCard from "../components/ItemCard.svelte";
-  import names from '../names';
+  import names from '../utilities/names';
 
   let name = undefined;
   let characterClass = undefined;
   let inventory = undefined;
+  let inventoryLoadingMessage = undefined;
 
   const createCharacter = (e)=>{  
     e.preventDefault();
@@ -14,9 +15,11 @@
     
     inventory = undefined;
     if (characterClass === 'Artifactor' || characterClass === 'NPC') {
+      inventoryLoadingMessage = 'generating inventory...'
       axios.get(`_ENV_API_URI/items?limit=2&spellchance=100`).then(res=>{
         inventory = [];
         res.data.forEach(item=>inventory.push(item));
+        inventoryLoadingMessage = undefined;
       });
     }
   }
@@ -53,6 +56,10 @@
       {#each inventory as item}
         <ItemCard item={item} />
       {/each}
+    {/if}
+
+    {#if inventoryLoadingMessage}
+      <strong class="my-1">{inventoryLoadingMessage}</strong>
     {/if}
   </div>
 </div>

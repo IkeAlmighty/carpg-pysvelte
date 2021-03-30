@@ -74,6 +74,14 @@ button:focus {
 	font-size: smaller;
 }
 
+.italic {
+	font-style: italic;
+}
+
+.text-center {
+	text-align: center;
+}
+
 .container {
-	margin: 10px;
+	margin: 0 auto;
 }

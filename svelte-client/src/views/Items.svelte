@@ -1,24 +1,59 @@
 <script>
-  import axios from "axios";
   import ItemCard from "../components/ItemCard.svelte";
-  
+  import { fetchItems, fetchTags } from "../utilities/endpoints";
+  import { onMount } from "svelte";
+
   let items = [];
   let loadingMessage = "Click 'Generate' to create a new set of items.";
   let limit = 10;
+  let seed = undefined;
   let spellchance = 100;
+  let availableTags = [];
+  let selectedTag = undefined;
+  let tags = [];
+
+  onMount(async () => {
+    fetchTags()
+      .then((res) => {
+        availableTags = res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
+  const addSelectedTag = () => {
+    if (selectedTag === "any") {
+      tags = [];
+    } else if (tags.includes("any")) {
+      tags.splice(tags.indexOf("any"), 1);
+      tags = [...tags];
+    } else if (tags.includes(selectedTag)) {
+      return;
+    }
+    tags.push(selectedTag);
+    tags = [...tags];
+  };
+
+  const removeTag = (tag) => {
+    if (tags.includes(tag)) {
+      tags.splice(tags.indexOf(tag), 1);
+      tags = [...tags];
+    }
+  };
 
   const generateItems = async (e) => {
     e.preventDefault();
-    items = [];
     loadingMessage = "Loading...";
-    try {
-      let res = await axios.get(
-        `_ENV_API_URI/items?limit=${limit}&spellchance=${spellchance}`
-      );
-      items = res.data;
-    } catch (error) {
-      loadingMessage = "Error Occured";
-    }
+    items = []
+    fetchItems(limit, spellchance, tags, seed)
+      .then((res) => {
+        items = res.data;
+        loadingMessage = undefined;
+      })
+      .catch((error) => {
+        loadingMessage = "Error Occured";
+      });
   };
 </script>
 
@@ -26,15 +61,45 @@
   <h1>Item Generator</h1>
   <form on:submit={generateItems}>
     <label class="d-block">
-      <input bind:value={limit} type="number" class="numberinput" />
-      Total Items
+      <input bind:value={seed} type="text" class="numberinput" />
+      <span class="inputlabel">Seed</span>
     </label>
+
+    <label class="d-block">
+      <input bind:value={limit} type="number" class="numberinput" />
+      <span class="inputlabel">Total Items</span>
+    </label>
+
     <label class="d-block">
       <input bind:value={spellchance} type="number" class="numberinput" />
-      % SpellChance
+      <span class="inputlabel">% SpellChance</span>
     </label>
+
+    {#if availableTags}
+      <select bind:value={selectedTag}>
+        <option hidden selected>Select Tag</option>
+        {#each availableTags as tag}
+          <option value={tag}>{tag.toUpperCase()}</option>
+        {/each}
+      </select>
+      <input type="button" value="Add Tag" on:click={addSelectedTag} />
+    {/if}
     <input type="submit" value="Generate" class="d-block" />
   </form>
+
+  <ul>
+    {#each tags as tag}
+      <li>
+        <button
+          on:click={() => {
+            removeTag(tag);
+          }}>{tag} (delete)</button
+        >
+      </li>
+    {/each}
+  </ul>
+  <!--  -->
+  <!-- Display the Items -->
   Items:
   <div class="d-block">
     <ol class="itemframe">
@@ -44,7 +109,7 @@
             <ItemCard {item} />
           </li>
         {/each}
-      {:else}
+      {:else if loadingMessage}
         {loadingMessage}
       {/if}
     </ol>
@@ -59,5 +124,9 @@
   .itemframe {
     width: 250px;
     text-justify: distribute;
+  }
+
+  .inputlabel {
+    margin-left: 10px;
   }
 </style>

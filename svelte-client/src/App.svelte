@@ -1,13 +1,19 @@
 <script>
-  import OptionsBar from "./components/OptionsBar.svelte";
   import Characters from "./views/Characters.svelte";
+  import Incantations from "./views/Incantations.svelte";
   import Items from "./views/Items.svelte";
+  import Spells from "./views/Spells.svelte";
+
+  let View = Items;
+
 </script>
 
 <main>
   <div class="view-container">
-    <Items />
+    <View />
     <Characters />
+    <Spells />
+    <Incantations />
   </div>
 </main>
 
@@ -20,6 +26,11 @@
   @media (min-width: 640px) {
     main {
       max-width: none;
+    }
+
+    .view-container {
+      display: flex;
+      flex-direction: column;
     }
   }
 
