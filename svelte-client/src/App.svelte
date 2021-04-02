@@ -3,6 +3,7 @@
   import Incantations from "./views/Incantations.svelte";
   import Items from "./views/Items.svelte";
   import Spells from "./views/Spells.svelte";
+  // import Planets from "./views/Planets.svelte";
 
   let View = Items;
 
@@ -14,6 +15,7 @@
     <Characters />
     <Spells />
     <Incantations />
+    <!-- <Planets /> -->
   </div>
 </main>
 

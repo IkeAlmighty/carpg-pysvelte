@@ -21,6 +21,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "materialize-css": "^1.0.0-rc.2",
+    "paper": "^0.12.15",
     "sirv-cli": "^1.0.0"
   }
 }
