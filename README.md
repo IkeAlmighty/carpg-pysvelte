@@ -35,7 +35,7 @@ currently a new api endpoint can be added by
 creating a new module in the api package and 
 adding:
 ```python
-def handle():
+def get():
     return 'example response'
 ```
 This will map the filename to an endpoint of
