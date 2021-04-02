@@ -6,5 +6,9 @@
 # to add another api endpoint simply
 # create a new module in the api package
 # and add a function called get(): to it.
-def get():
+def get(request):
   return 'hello!'
+
+
+
+# /api/incatations?arg1=value&arg2
