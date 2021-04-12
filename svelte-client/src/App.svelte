@@ -1,21 +1,24 @@
 <script>
+  import DropDownContainer from "./components/DropDownContainer.svelte";
+
   import Characters from "./views/Characters.svelte";
   import Incantations from "./views/Incantations.svelte";
   import Items from "./views/Items.svelte";
   import Spells from "./views/Spells.svelte";
   // import Planets from "./views/Planets.svelte";
-
-  let View = Items;
 </script>
 
 <main>
-  <div class="view-container">
-    <View />
-    <Characters />
-    <Spells />
-    <Incantations />
-    <!-- <Planets /> -->
+  <div class="tool-container">
+    <DropDownContainer child={Items} panelName="Item Generator" />
+    <DropDownContainer child={Characters} panelName="Character Builder" />
+    <DropDownContainer child={Spells} panelName="Spell Generator" />
+    <DropDownContainer
+      child={Incantations}
+      panelName="Incantation Translator"
+    />
   </div>
+  <div class="notepad"><div editable /></div>
 </main>
 
 <style>
@@ -24,18 +27,22 @@
     max-width: 240px;
   }
 
+  .notepad {
+    width: 100%;
+  }
+
   @media (min-width: 640px) {
     main {
       max-width: none;
     }
 
-    .view-container {
+    .tool-container {
       display: flex;
       flex-direction: column;
     }
   }
 
-  .view-container {
+  .tool-container {
     display: flex;
     flex-direction: row;
   }
