@@ -9,6 +9,8 @@ def get(request):
     tags = request.args.get('tags').split(',')
     tags = [tag.strip() for tag in tags]
     
-    print(tags)
+    onlyincantations = False
+    if request.args.get('onlyincantations'):
+        onlyincantations = bool(request.args.get('onlyincantations'))
     
-    return __googlesheets.rand_tagged_values("Spells", valid_tags=tags, limit=limit)
+    return __googlesheets.rand_tagged_values("Spells", valid_tags=tags, limit=limit, onlyincantations=onlyincantations)

@@ -15,5 +15,5 @@ def spellmap(incantation):
   
   pass
 
-def readModel(filename):
+def readmodel(filename):
   pass

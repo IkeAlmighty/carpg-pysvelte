@@ -33,7 +33,7 @@ def rand_basic_values(value_type, limit=None):
 '''
     Returns random values within a max limit that have the specified valid_tags.
 '''
-def rand_tagged_values(value_type, valid_tags, limit=None):
+def rand_tagged_values(value_type, valid_tags, limit=None, onlyincantations=False):
     # note: value == "Spells" or "Items"
     
     # get all items:
@@ -46,7 +46,14 @@ def rand_tagged_values(value_type, valid_tags, limit=None):
         value_tags = value[4].split(',')
         for value_tag in value_tags:
             if value_tag.strip() in valid_tags or (value_type == "Spells" and value_tag.strip() == 'any'):
-                valid_values.append(value)
+                if value_type == "Spells":
+                    if onlyincantations and value[2] == 'y':
+                        valid_values.append(value)
+                    elif not onlyincantations:
+                        valid_values.append(value)
+                else:
+                    valid_values.append(value)
+                    
                 
     return rand_values(valid_values, limit=limit)
 
