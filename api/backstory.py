@@ -20,5 +20,5 @@ class Backstory:
 
 def get(request):
     backstory = Backstory()
-    
+
     return backstory.__str__()

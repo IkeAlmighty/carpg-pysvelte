@@ -45,7 +45,7 @@
   const generateItems = async (e) => {
     e.preventDefault();
     loadingMessage = "Loading...";
-    items = []
+    items = [];
     fetchItems(limit, spellchance, tags, seed)
       .then((res) => {
         items = res.data;

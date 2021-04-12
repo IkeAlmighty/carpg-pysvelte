@@ -18,7 +18,7 @@ const stringifyTags = (tags) => {
 };
 
 const fetchItems = (limit, spellchance, tags, seed) => {
-    return axios.get(
+  return axios.get(
     `_ENV_API_URI/items?limit=${limit}&spellchance=${spellchance}&seed=${seed}&tags=${stringifyTags(
       tags
     )}`

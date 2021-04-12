@@ -6,7 +6,6 @@
   // import Planets from "./views/Planets.svelte";
 
   let View = Items;
-
 </script>
 
 <main>

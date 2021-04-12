@@ -1,18 +1,17 @@
 <script>
-  import { onMount } from 'svelte';
-  import paper from 'paper';
+  import { onMount } from "svelte";
+  import paper from "paper";
 
   let planetdata = undefined;
 
-  onMount(()=>{
+  onMount(() => {
     paper.install(window);
-    paper.setup('map-canvas');
-    
-  })
+    paper.setup("map-canvas");
+  });
 </script>
 
 <div class="container">
   {#if planetdata}
-    <canvas id='map-canvas'></canvas>
+    <canvas id="map-canvas" />
   {/if}
 </div>

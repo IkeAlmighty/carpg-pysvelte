@@ -1,4 +1,3 @@
-
 const CharacterFactory = (characterClass, name) => {
   let character = {};
   switch (characterClass) {
@@ -12,7 +11,6 @@ const CharacterFactory = (characterClass, name) => {
       break;
     case "Diplomat/Linguist":
   }
-}
-
+};
 
 export default CharacterFactory;

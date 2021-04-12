@@ -7,8 +7,7 @@
 # create a new module in the api package
 # and add a function called get(): to it.
 def get(request):
-  return 'hello!'
-
+    return 'hello!'
 
 
 # /api/incatations?arg1=value&arg2

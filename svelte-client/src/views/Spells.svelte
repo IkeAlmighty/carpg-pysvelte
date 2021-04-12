@@ -4,7 +4,7 @@
   import { fetchTags, fetchSpells } from "../utilities/endpoints";
 
   let spells = [];
-  let loadingMessage = "click generate to generate spells"
+  let loadingMessage = "click generate to generate spells";
   let limit = 100;
   let availableTags = [];
   let selectedTag = undefined;
@@ -54,9 +54,8 @@
   };
 
   const getSpellName = (spell) => {
-    return (spell[1] != '-'? spell[1]: "No Name")
-  }
-
+    return spell[1] != "-" ? spell[1] : "No Name";
+  };
 </script>
 
 <div class="container">

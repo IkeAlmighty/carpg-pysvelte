@@ -1,9 +1,9 @@
+import random
+import json
+import requests
 SPREADSHEET_ID = "1mPBE8TY8fH2ckSRGFazA9cPbNSmx6-DNVrwMJczD-6Q"
 GOOGLE_SHEETS_API_KEY = "AIzaSyAaRHCsvBq6T_lj-gfzOFoHiycCnpvBueY"
 
-import requests
-import json
-import random
 
 '''
 @param: sheet_tab - the sheet tab name (Items, Spells)
@@ -13,6 +13,8 @@ The spreadsheet can be found at
 https://docs.google.com/spreadsheets/d/1mPBE8TY8fH2ckSRGFazA9cPbNSmx6-DNVrwMJczD-6Q/edit#gid=0
 Additions are welcome!!
 '''
+
+
 def get_values(value_type):
     res = requests.get(
         "https://sheets.googleapis.com/v4/spreadsheets/{}/values/{}!A2:E?key={}".format(
@@ -23,6 +25,7 @@ def get_values(value_type):
     )
     return json.loads(res.content)["values"]
 
+
 def rand_basic_values(value_type, limit=None):
     # get a list of all the items.
     all_basic_values = get_values(value_type)
@@ -30,18 +33,21 @@ def rand_basic_values(value_type, limit=None):
 
     return basic_values
 
+
 '''
     Returns random values within a max limit that have the specified valid_tags.
 '''
+
+
 def rand_tagged_values(value_type, valid_tags, limit=None, onlyincantations=False):
     # note: value == "Spells" or "Items"
-    
+
     # get all items:
     all_basic_values = get_values(value_type)
-    
+
     # filter out items that don't have tags specified by valid_tags
     valid_values = []
-    
+
     for value in all_basic_values:
         value_tags = value[4].split(',')
         for value_tag in value_tags:
@@ -53,17 +59,19 @@ def rand_tagged_values(value_type, valid_tags, limit=None, onlyincantations=Fals
                         valid_values.append(value)
                 else:
                     valid_values.append(value)
-                    
-                
+
     return rand_values(valid_values, limit=limit)
+
 
 '''
     Returns random values within a max limit.
-'''      
+'''
+
+
 def rand_values(values, limit=None):
     _values = values.copy()
     final_values = []
-    
+
     # lower limit if it is bigger than the dataset (or set it if it is None):
     if limit == None or limit >= len(_values):
         limit = len(_values)

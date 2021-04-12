@@ -1,28 +1,31 @@
 <script>
   import axios from "axios";
   import ItemCard from "../components/ItemCard.svelte";
-  import names from '../utilities/names';
+  import names from "../utilities/names";
 
   let name = undefined;
   let characterClass = undefined;
   let inventory = undefined;
   let inventoryLoadingMessage = undefined;
 
-  const createCharacter = (e)=>{  
+  const createCharacter = (e) => {
     e.preventDefault();
-    let lastName = names[Math.floor(Math.random()*Math.floor(names.length - 1))]
-    name = `${names[Math.floor(Math.random()*Math.floor(names.length - 1))]} ${lastName}`;
-    
+    let lastName =
+      names[Math.floor(Math.random() * Math.floor(names.length - 1))];
+    name = `${
+      names[Math.floor(Math.random() * Math.floor(names.length - 1))]
+    } ${lastName}`;
+
     inventory = undefined;
-    if (characterClass === 'Artifactor' || characterClass === 'NPC') {
-      inventoryLoadingMessage = 'generating inventory...'
-      axios.get(`_ENV_API_URI/items?limit=2&spellchance=100`).then(res=>{
+    if (characterClass === "Artifactor" || characterClass === "NPC") {
+      inventoryLoadingMessage = "generating inventory...";
+      axios.get(`_ENV_API_URI/items?limit=2&spellchance=100`).then((res) => {
         inventory = [];
-        res.data.forEach(item=>inventory.push(item));
+        res.data.forEach((item) => inventory.push(item));
         inventoryLoadingMessage = undefined;
       });
     }
-  }
+  };
 </script>
 
 <div class="container">
@@ -49,12 +52,14 @@
   </form>
 
   <h1>{characterClass}</h1>
-  <div>{#if name}{name}{/if}</div>
+  <div>
+    {#if name}{name}{/if}
+  </div>
   <div>
     {#if inventory}
-    <u class="d-block my-1">Inventory</u>
+      <u class="d-block my-1">Inventory</u>
       {#each inventory as item}
-        <ItemCard item={item} />
+        <ItemCard {item} />
       {/each}
     {/if}
 
