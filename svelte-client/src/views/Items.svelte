@@ -2,8 +2,8 @@
   import ItemCard from "../components/ItemCard.svelte";
   import { fetchItems, fetchTags } from "../utilities/endpoints";
   import { onMount } from "svelte";
+  import { items } from '../stores';
 
-  let items = [];
   let loadingMessage = "Click 'Generate' to create a new set of items.";
   let limit = 10;
   let seed = undefined;
@@ -45,10 +45,10 @@
   const generateItems = async (e) => {
     e.preventDefault();
     loadingMessage = "Loading...";
-    items = [];
+    $items = [];
     fetchItems(limit, spellchance, tags, seed)
       .then((res) => {
-        items = res.data;
+        $items = res.data;
         loadingMessage = undefined;
       })
       .catch((error) => {
@@ -103,8 +103,8 @@
   Items:
   <div class="d-block">
     <ol class="itemframe">
-      {#if items.length > 0}
-        {#each items as item}
+      {#if $items.length > 0}
+        {#each $items as item}
           <li>
             <ItemCard {item} />
           </li>

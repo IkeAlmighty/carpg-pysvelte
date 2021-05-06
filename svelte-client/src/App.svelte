@@ -1,7 +1,5 @@
 <script>
-  import DropDownContainer from "./components/DropDownContainer.svelte";
-import DropDownMenu from "./components/DropDownMenu.svelte";
-import ItemCard from "./components/ItemCard.svelte";
+  import DropDownMenu from "./components/DropDownMenu.svelte";
 
   import Characters from "./views/Characters.svelte";
   import Incantations from "./views/Incantations.svelte";
@@ -33,18 +31,6 @@ import ItemCard from "./components/ItemCard.svelte";
 <style>
   main {
     padding: 1em;
-    max-width: 240px;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-
-    /* .menubar {
-      display: flex;
-      flex-direction: column;
-    } */
   }
 
   .menubar {

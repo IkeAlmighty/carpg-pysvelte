@@ -1,7 +1,8 @@
 <script>
   import axios from "axios";
-  import ItemCard from "../components/ItemCard.svelte";
+  import CharacterCard from "../components/CharacterCard.svelte";
   import names from "../utilities/names";
+  import { characters } from '../stores'
 
   let name = undefined;
   let characterClass = undefined;
@@ -19,10 +20,13 @@
     inventory = undefined;
     if (characterClass === "Artifactor" || characterClass === "NPC") {
       inventoryLoadingMessage = "generating inventory...";
+      $characters[name] = { name, inventory, characterClass, inventoryLoadingMessage }
       axios.get(`_ENV_API_URI/items?limit=2&spellchance=100`).then((res) => {
         inventory = [];
         res.data.forEach((item) => inventory.push(item));
         inventoryLoadingMessage = undefined;
+
+        $characters[name] = { name, inventory, characterClass, inventoryLoadingMessage }
       });
     }
   };
@@ -51,22 +55,14 @@
     <input type="submit" value="Create Character" />
   </form>
 
-  <h1>{characterClass}</h1>
-  <div>
-    {#if name}{name}{/if}
-  </div>
-  <div>
-    {#if inventory}
-      <u class="d-block my-1">Inventory</u>
-      {#each inventory as item}
-        <ItemCard {item} />
-      {/each}
-    {/if}
-
-    {#if inventoryLoadingMessage}
-      <strong class="my-1">{inventoryLoadingMessage}</strong>
-    {/if}
-  </div>
+  {#each Object.keys($characters).reverse() as key}
+  <CharacterCard 
+    name={$characters[key].name} 
+    inventory={$characters[key].inventory} 
+    characterClass={$characters[key].characterClass} 
+    inventoryLoadingMessage={$characters[key].inventoryLoadingMessage} 
+  />
+  {/each}
 </div>
 
 <style>
