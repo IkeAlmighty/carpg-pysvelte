@@ -67,6 +67,7 @@
         padding: 0.4rem;
         padding-left: 0px;
         margin-left: 0;
+        font-size:x-large;
     }
 
     .menu-option:hover {
