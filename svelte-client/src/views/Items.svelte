@@ -2,15 +2,14 @@
   import ItemCard from "../components/ItemCard.svelte";
   import { fetchItems, fetchTags } from "../utilities/endpoints";
   import { onMount } from "svelte";
-  import { items } from '../stores';
+  import { items, itemtags } from '../stores';
 
   let loadingMessage = "Click 'Generate' to create a new set of items.";
-  let limit = 10;
+  let limit = undefined;
   let seed = undefined;
-  let spellchance = 100;
+  let spellchance = undefined;
   let availableTags = [];
   let selectedTag = undefined;
-  let tags = [];
 
   onMount(async () => {
     fetchTags()
@@ -24,32 +23,36 @@
 
   const addSelectedTag = () => {
     if (selectedTag === "any") {
-      tags = [];
-    } else if (tags.includes("any")) {
-      tags.splice(tags.indexOf("any"), 1);
-      tags = [...tags];
-    } else if (tags.includes(selectedTag)) {
+      $itemtags = [];
+    } else if ($itemtags.includes("any")) {
+      $itemtags.splice($itemtags.indexOf("any"), 1);
+      $itemtags = [...$itemtags];
+    } else if ($itemtags.includes(selectedTag)) {
       return;
     }
-    tags.push(selectedTag);
-    tags = [...tags];
+    $itemtags.push(selectedTag);
+    $itemtags = [...$itemtags];
   };
 
   const removeTag = (tag) => {
-    if (tags.includes(tag)) {
-      tags.splice(tags.indexOf(tag), 1);
-      tags = [...tags];
+    if ($itemtags.includes(tag)) {
+      $itemtags.splice($itemtags.indexOf(tag), 1);
+      $itemtags = [...$itemtags];
     }
   };
 
   const generateItems = async (e) => {
     e.preventDefault();
+    if(!limit) limit = 10;
+    if(!spellchance) spellchance = 100;
     loadingMessage = "Loading...";
     $items = [];
-    fetchItems(limit, spellchance, tags, seed)
+    fetchItems(limit, spellchance, $itemtags, seed)
       .then((res) => {
         $items = res.data;
         loadingMessage = undefined;
+        limit = undefined;
+        spellchance = undefined;
       })
       .catch((error) => {
         loadingMessage = "Error Occured";
@@ -60,20 +63,16 @@
 <div class="container">
   <h1>Item Generator</h1>
   <form on:submit={generateItems}>
-    <label class="d-block">
-      <input bind:value={seed} type="text" class="numberinput" />
+    <div class="col2">
+      <input bind:value={seed} type="text" class="numberinput" placeholder="Seed"/>
       <span class="inputlabel">Seed</span>
-    </label>
 
-    <label class="d-block">
-      <input bind:value={limit} type="number" class="numberinput" />
+      <input bind:value={limit} type="number" class="numberinput" placeholder="Total Items"/>
       <span class="inputlabel">Total Items</span>
-    </label>
 
-    <label class="d-block">
-      <input bind:value={spellchance} type="number" class="numberinput" />
-      <span class="inputlabel">% SpellChance</span>
-    </label>
+      <input bind:value={spellchance} type="number" class="numberinput" placeholder="Percent Spellchance"/>
+      <span class="inputlabel">Spell Chance</span>
+    </div>
 
     {#if availableTags}
       <select bind:value={selectedTag}>
@@ -88,7 +87,7 @@
   </form>
 
   <ul>
-    {#each tags as tag}
+    {#each $itemtags as tag}
       <li>
         <button
           on:click={() => {
@@ -100,33 +99,35 @@
   </ul>
   <!--  -->
   <!-- Display the Items -->
-  Items:
+  Items ({$items.length}) :
   <div class="d-block">
-    <ol class="itemframe">
+    <div class="itemframe">
       {#if $items.length > 0}
         {#each $items as item}
-          <li>
             <ItemCard {item} />
-          </li>
         {/each}
       {:else if loadingMessage}
         {loadingMessage}
       {/if}
-    </ol>
+    </div>
   </div>
 </div>
 
 <style>
-  .numberinput {
-    width: 100px;
+  form .col2 {
+    display: grid;
+    grid-template-columns: auto auto
   }
-
-  .itemframe {
-    width: 250px;
-    text-justify: distribute;
+  .numberinput {
+    width: 100%;
   }
 
   .inputlabel {
-    margin-left: 10px;
+    padding: 0.5em;
+  }
+
+  .itemframe {
+    width: 100%;
+    text-justify: distribute;
   }
 </style>

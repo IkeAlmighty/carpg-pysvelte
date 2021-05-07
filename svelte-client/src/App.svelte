@@ -31,6 +31,7 @@
 <style>
   main {
     padding: 1em;
+    max-width: 600px;
   }
 
   .menubar {

@@ -2,8 +2,8 @@
   import { onMount } from "svelte";
   import ErrorBox from "../components/ErrorBox.svelte";
   import { fetchTags, fetchSpells } from "../utilities/endpoints";
+  import { spells } from '../stores';
 
-  let spells = [];
   let loadingMessage = "click generate to generate spells";
   let limit = 100;
   let availableTags = [];
@@ -54,7 +54,7 @@
   };
 
   const getSpellName = (spell) => {
-    return spell[1] != "-" ? spell[1] : "No Name";
+    return spell[1] !== "-" ? `${spell[1]}: ` : "";
   };
 </script>
 
@@ -90,17 +90,17 @@
 
   Spells:
   <div class="d-block">
-    <ol class="spellframe">
+    <div >
       {#if spells.length > 0}
         {#each spells as spell}
-          <li>
-            <strong>{getSpellName(spell)}</strong>: {spell[0]}
-          </li>
+          <div class="spellframe">
+            <strong>{getSpellName(spell)}</strong>{spell[0]}
+          </div>
         {/each}
       {:else if loadingMessage}
         {loadingMessage}
       {/if}
-    </ol>
+    </div>
   </div>
 </div>
 
@@ -110,8 +110,10 @@
   }
 
   .spellframe {
-    width: 250px;
+    width: 100%;
     text-justify: distribute;
+    display: block;
+    margin: 2em 0;
   }
 
   .inputlabel {

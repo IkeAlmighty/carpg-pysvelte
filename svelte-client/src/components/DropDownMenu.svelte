@@ -17,7 +17,7 @@
 <div class="container">
     <button on:click={()=>{menuIsVisible = !menuIsVisible}}>
         {#if menuIsVisible}
-            Close Menu
+            uneM
         {:else}
             Menu
         {/if}

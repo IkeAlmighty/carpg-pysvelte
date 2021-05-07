@@ -30,7 +30,7 @@
     </form>
   </div>
 
-  <div class="d-block text-wrapped">
+  <div class="d-block">
     {#if spell}
       {spell[0]}
     {/if}
@@ -43,7 +43,7 @@
     margin: 10px 0;
   }
 
-  .text-wrapped {
-    max-width: 350px;
+  input {
+    width: 100%;
   }
 </style>
