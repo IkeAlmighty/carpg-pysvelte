@@ -16,4 +16,4 @@ def get(request):
     if request.args.get('onlyincantations'):
         onlyincantations = bool(request.args.get('onlyincantations'))
 
-    return __googlesheets.rand_tagged_values("Spells", valid_tags=tags, limit=limit, onlyincantations=onlyincantations)
+    return __googlesheets.rand_tagged_spells(valid_tags=tags, limit=limit, only_incantations=onlyincantations)

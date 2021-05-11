@@ -1,25 +1,20 @@
 import { writable } from 'svelte/store';
 
-const items = writable(JSON.parse(localStorage.getItem("items")) || []);
-const itemtags = writable(JSON.parse(localStorage.getItem("itemtags")) || []);
 
-const spells = writable(JSON.parse(localStorage.getItem("spells")) || []);
-const characters = writable(JSON.parse(localStorage.getItem("characters")) || {});
+function createClientStore(init, storeName) {
+  let data = writable(JSON.parse(localStorage.getItem(storeName) || init))
+  
+  data.subscribe(listOrObj => {
+    localStorage.setItem(storeName, JSON.stringify(listOrObj))
+  })
+  
+  return data;
+}
 
-items.subscribe(list => {
-  localStorage.setItem("items", JSON.stringify(list));
-})
+const items = createClientStore([], "items");
+const itemtags = createClientStore([], "itemtags");
+const spells = createClientStore([], "spells");
+const spelltags = createClientStore([], "spelltags");
+const characters = createClientStore({}, "characters");
 
-itemtags.subscribe(list => {
-  localStorage.setItem("itemtags", JSON.stringify(list));
-})
-
-spells.subscribe(list => {
-  localStorage.setItem("spells", JSON.stringify(list));
-})
-
-characters.subscribe(object => {
-  localStorage.setItem("characters", JSON.stringify(object));
-})
-
-export { items, itemtags, spells, characters }; 
+export { items, itemtags, spells, spelltags, characters }; 

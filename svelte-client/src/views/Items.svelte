@@ -12,7 +12,7 @@
   let selectedTag = undefined;
 
   onMount(async () => {
-    fetchTags()
+    fetchTags("Items")
       .then((res) => {
         availableTags = res.data;
       })

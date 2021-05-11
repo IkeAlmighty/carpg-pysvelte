@@ -27,16 +27,15 @@ def get(request):
 
     if request.args.get('basic') and request.args.get('basic') == 'true':
         return __googlesheets.rand_values(__googlesheets.get_values("Items"), limit=limit)
-    # TODO: make the tags work
 
-    basic_tagged_items = __googlesheets.rand_tagged_values(
-        "Items", valid_tags=tags, limit=limit)
+    basic_tagged_items = __googlesheets.rand_tagged_items(valid_tags=tags, limit=limit)
 
     final_items = []
 
     # get all the spells (randomized)!
-    tagged_spells = __googlesheets.rand_tagged_values(
-        "Spells", valid_tags=tags, limit=limit)
+    valid_spell_tags = tags.copy()
+    valid_spell_tags.append("any") # 'any' is not stated explicitely as a tag on items, so we add it.
+    tagged_spells = __googlesheets.rand_tagged_spells(valid_tags=valid_spell_tags, limit=limit)
 
     # lower the limit if it is bigger than total item list.
     if limit >= len(basic_tagged_items):

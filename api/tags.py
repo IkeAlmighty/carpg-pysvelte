@@ -2,13 +2,17 @@ from . import __googlesheets
 
 
 def get(request):
-    all_basic_items = __googlesheets.get_values("Items")
+
+    tag_type = request.args.get('tagtype')
+    if not tag_type: tag_type = "Items"
+
+    all_basic_values = __googlesheets.get_values(tag_type)
 
     all_tags = []
 
-    for item in all_basic_items:
-        item_tags = item[4].split(',')
-        for tag in item_tags:
+    for value in all_basic_values:
+        value_tags = value[4].split(',')
+        for tag in value_tags:
             tag = tag.strip()
             if not tag in all_tags:
                 all_tags.append(tag)

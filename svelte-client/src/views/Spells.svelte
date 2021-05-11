@@ -2,16 +2,15 @@
   import { onMount } from "svelte";
   import ErrorBox from "../components/ErrorBox.svelte";
   import { fetchTags, fetchSpells } from "../utilities/endpoints";
-  import { spells } from '../stores';
+  import { spells, spelltags } from '../stores';
 
   let loadingMessage = "click generate to generate spells";
   let limit = 100;
   let availableTags = [];
   let selectedTag = undefined;
-  let tags = [];
 
   onMount(() => {
-    fetchTags()
+    fetchTags("Spells")
       .then((res) => {
         availableTags = res.data;
       })
@@ -23,9 +22,10 @@
   const generateSpells = async (e) => {
     e.preventDefault();
     loadingMessage = "Loading...";
-    fetchSpells(limit, tags)
+    $spells = []
+    fetchSpells(limit, $spelltags)
       .then((res) => {
-        spells = res.data;
+        $spells = [... res.data];
         loadingMessage = undefined;
       })
       .catch((error) => {
@@ -35,21 +35,21 @@
 
   const addSelectedTag = () => {
     if (selectedTag === "any") {
-      tags = [];
-    } else if (tags.includes("any")) {
-      tags.splice(tags.indexOf("any"), 1);
-      tags = [...tags];
-    } else if (tags.includes(selectedTag)) {
+      $spelltags = [];
+    } else if ($spelltags.includes("any")) {
+      $spelltags.splice($spelltags.indexOf("any"), 1);
+      $spelltags = [...$spelltags];
+    } else if ($spelltags.includes(selectedTag)) {
       return;
     }
-    tags.push(selectedTag);
-    tags = [...tags];
+    $spelltags.push(selectedTag);
+    $spelltags = [...$spelltags];
   };
 
   const removeTag = (tag) => {
-    if (tags.includes(tag)) {
-      tags.splice(tags.indexOf(tag), 1);
-      tags = [...tags];
+    if ($spelltags.includes(tag)) {
+      $spelltags.splice($spelltags.indexOf(tag), 1);
+      $spelltags = [...$spelltags];
     }
   };
 
@@ -77,7 +77,7 @@
   </form>
 
   <ul>
-    {#each tags as tag}
+    {#each $spelltags as tag}
       <li>
         <button
           on:click={() => {
@@ -91,8 +91,8 @@
   Spells:
   <div class="d-block">
     <div >
-      {#if spells.length > 0}
-        {#each spells as spell}
+      {#if $spells.length > 0}
+        {#each $spells as spell}
           <div class="spellframe">
             <strong>{getSpellName(spell)}</strong>{spell[0]}
           </div>

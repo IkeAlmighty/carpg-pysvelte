@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const fetchTags = () => {
-  return axios.get("_ENV_API_URI/tags");
+const fetchTags = (tagType) => {
+  return axios.get(`_ENV_API_URI/tags?tagtype=${tagType}`);
 };
 
 // helper function

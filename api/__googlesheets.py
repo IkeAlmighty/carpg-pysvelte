@@ -39,30 +39,44 @@ def rand_basic_values(value_type, limit=None):
 '''
 
 
-def rand_tagged_values(value_type, valid_tags, limit=None, onlyincantations=False):
+def rand_tagged_items(valid_tags, limit=None):
     # note: value == "Spells" or "Items"
 
     # get all items:
-    all_basic_values = get_values(value_type)
+    all_basic_items = get_values("Items")
 
     # filter out items that don't have tags specified by valid_tags
-    valid_values = []
+    valid_items = []
 
-    for value in all_basic_values:
-        value_tags = value[4].split(',')
-        for value_tag in value_tags:
-            if value_tag.strip() in valid_tags or (value_type == "Spells" and value_tag.strip() == 'any'):
-                if value_type == "Spells":
-                    if onlyincantations and value[2] == 'y':
-                        valid_values.append(value)
-                    elif not onlyincantations:
-                        valid_values.append(value)
-                else:
-                    valid_values.append(value)
+    for item in all_basic_items:
+        item_tags = item[4].split(',')
+        for item_tag in item_tags:
+            print()
+            if item_tag.strip() in valid_tags:
+               valid_items.append(item)
+               break
+    
+    return rand_values(valid_items, limit=limit)
 
-    return rand_values(valid_values, limit=limit)
+def rand_tagged_spells(valid_tags, limit=None, only_incantations=False):
+    # get all spells:
+    all_spells = get_values("Spells")
 
+    valid_spells = []
 
+    # otherwise, filter out spells that don't have tags specified by valid tags
+    for spell in all_spells:
+        spell_tags = spell[4].split(',')
+        for spell_tag in spell_tags:
+            if spell_tag.strip() in valid_tags:
+                if only_incantations and spell[2] == 'y':
+                    valid_spells.append(spell)
+                    break
+                elif not only_incantations and spell[2] == 'n':
+                    valid_spells.append(spell)
+                    break
+
+    return rand_values(valid_spells, limit=limit)
 '''
     Returns random values within a max limit.
 '''
