@@ -1,1 +1,2 @@
-web: start_production_server.sh
+api: gunicorn flask-backend/app:server
+web: cd svelte-client && npm run build && npm run start
