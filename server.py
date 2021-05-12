@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, render_template
 from flask_cors import CORS
 import importlib
 import json
@@ -19,7 +19,9 @@ def call_api(resource):
 
 @app.route('/')
 def base():
-    return send_from_directory('svelte-client/public', 'index.html')
+    # return send_from_directory('svelte-client/public', 'index.html')
+    file = open('svelte-client/public/index.html')
+    return file.readlines()
 
 # path for all frontend static files
 
