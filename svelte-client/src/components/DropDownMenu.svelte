@@ -5,7 +5,7 @@
         console.log('Using the default (empty) setView() function. Pass your own set view function in to make the DropDownMenu interactive.')
     }
 
-    let menuIsVisible = true;
+    let menuIsVisible = false;
 
     function callSetView(view) {
         setView(view);

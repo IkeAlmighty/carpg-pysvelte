@@ -13,10 +13,10 @@
 <main>
   <div class="menubar">
     <DropDownMenu options = {[
-      {view: Characters, label: "Characters"},
-      {view: Incantations, label: "Incantations"},
       {view: Items, label: "Items"},
+      {view: Incantations, label: "Incantations"},
       {view: Spells, label: "Spells"},
+      {view: Characters, label: "Characters"},
       ]}
       setView={(view)=>{
         View = view;
@@ -25,6 +25,10 @@
   
   {#if View} 
     <svelte:component this={View} />
+  {/if}
+
+  {#if !View}
+    <div id='default-view'>Choose an option from 'Menu' to get started.</div>
   {/if}
 </main>
 
@@ -37,5 +41,10 @@
   .menubar {
     display: flex;
     flex-direction: row;
+  }
+
+  #default-view {
+    margin: 20vh auto;
+    text-align: center;
   }
 </style>
