@@ -1,1 +1,1 @@
-web: gunicorn app:server
+web: start_production_server.sh
