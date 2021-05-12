@@ -2,7 +2,8 @@ import { writable } from 'svelte/store';
 
 
 function createClientStore(init, storeName) {
-  let data = writable(JSON.parse(localStorage.getItem(storeName) || init))
+
+  let data = writable(JSON.parse(localStorage.getItem(storeName)) || init)
   
   data.subscribe(listOrObj => {
     localStorage.setItem(storeName, JSON.stringify(listOrObj))
