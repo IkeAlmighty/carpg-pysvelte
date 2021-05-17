@@ -14,7 +14,7 @@ def get(request):
         value_tags = value[4].split(',')
         for tag in value_tags:
             tag = tag.strip()
-            if not tag in all_tags:
+            if not tag in all_tags and tag != '-' and tag.upper() != 'NONE':
                 all_tags.append(tag)
 
     return sorted(all_tags)
