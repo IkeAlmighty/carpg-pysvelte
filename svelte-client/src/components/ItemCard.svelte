@@ -55,7 +55,6 @@
 
 <style>
   .item-container {
-    max-width: 600px;
     margin: 20px 0;
   }
 </style>

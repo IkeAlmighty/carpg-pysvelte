@@ -1,6 +1,5 @@
 from . import __googlesheets
 import random
-import re
 
 '''
 Returns a list of items with randomely chosen spells and actions on them. 
@@ -10,32 +9,34 @@ without any spells or actions on them.
 
 
 def get(request):
-    limit = 100
-    if request.args.get('limit'):
-        limit = int(request.args.get('limit'))
 
-    spellchance = 100
-    if request.args.get('spellchance'):
-        spellchance = int(request.args.get('spellchance'))
+    def get_query(query_name, default_val):
+        if request.args.get(query_name):
+            return request.args.get(query_name)
+        else:
+            return default_val
+
+    limit = int(get_query('limit', 100))
+    spellchance = int(get_query('spellchance', 100))
+    tags = get_query('tags', '').split(',')
 
     if request.args.get('seed') and request.args.get('seed') != 'undefined':
         random.seed(request.args.get('seed'))
 
-    tags = ['none']
-    if request.args.get('tags'):
-        tags = request.args.get('tags').split(',')
-
-    if request.args.get('basic') and request.args.get('basic') == 'true':
+    if spellchance == 0:
         return __googlesheets.rand_values(__googlesheets.get_values("Items"), limit=limit)
 
-    basic_tagged_items = __googlesheets.rand_tagged_items(valid_tags=tags, limit=limit)
+    basic_tagged_items = __googlesheets.rand_tagged_items(
+        valid_tags=tags, limit=limit)
 
     final_items = []
 
     # get all the spells (randomized)!
     valid_spell_tags = tags.copy()
-    valid_spell_tags.append("any") # 'any' is not stated explicitely as a tag on items, so we add it.
-    tagged_spells = __googlesheets.rand_tagged_spells(valid_tags=valid_spell_tags, limit=limit)
+    # 'any' is not stated explicitely as a tag on items, so we add it.
+    valid_spell_tags.append("any")
+    tagged_spells = __googlesheets.rand_tagged_spells(
+        valid_tags=valid_spell_tags, limit=limit)
 
     # lower the limit if it is bigger than total item list.
     if limit >= len(basic_tagged_items):

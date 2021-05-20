@@ -9,8 +9,10 @@ def get(request):
     else:
         limit = int(limit)
 
-    tags = request.args.get('tags').split(',')
-    tags = [tag.strip() for tag in tags]
+    tags = ["any"]
+    if request.args.get('tags'):
+        tags = request.args.get('tags').split(',')
+        tags = [tag.strip() for tag in tags]
 
     onlyincantations = False
     if request.args.get('onlyincantations'):

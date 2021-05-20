@@ -1,34 +1,22 @@
 <script>
-  import axios from "axios";
   import CharacterCard from "../components/CharacterCard.svelte";
-  import names from "../utilities/names";
-  import { characters } from '../stores'
 
-  let name = undefined;
-  let characterClass = undefined;
-  let inventory = undefined;
-  let inventoryLoadingMessage = undefined;
+  import CharacterFactory from "../utilities/CharacterFactory";
+  import { characters } from "../stores";
+
+  let selectedName;
+  let selectedCharacterClass = CharacterFactory.artificer;
+  let selectedTier;
 
   const createCharacter = (e) => {
     e.preventDefault();
-    let lastName =
-      names[Math.floor(Math.random() * Math.floor(names.length - 1))];
-    name = `${
-      names[Math.floor(Math.random() * Math.floor(names.length - 1))]
-    } ${lastName}`;
 
-    inventory = undefined;
-    if (characterClass === "Artifactor" || characterClass === "NPC") {
-      inventoryLoadingMessage = "generating inventory...";
-      $characters[name] = { name, inventory, characterClass, inventoryLoadingMessage }
-      axios.get(`_ENV_API_URI/items?limit=2&spellchance=100`).then((res) => {
-        inventory = [];
-        res.data.forEach((item) => inventory.push(item));
-        inventoryLoadingMessage = undefined;
+    let name = selectedName; // reset allows us to click create multiple in a row before the first is loaded
+    selectedName = undefined;
 
-        $characters[name] = { name, inventory, characterClass, inventoryLoadingMessage }
-      });
-    }
+    let tier = parseInt(selectedTier) ? parseInt(selectedTier) : 5; // TODO: impl in forms
+
+    selectedCharacterClass.generate(name, tier);
   };
 </script>
 
@@ -37,31 +25,51 @@
   <form on:submit={createCharacter}>
     <input
       class="inputfield"
-      bind:value={name}
+      bind:value={selectedName}
       type="text"
       placeholder="Character Name (Currently Randomized)"
     />
 
-    <select class="inputfield" bind:value={characterClass}>
+    <select class="inputfield" bind:value={selectedTier}>
+      {#each [1, 2, 3, 4, 5] as tier}
+        <option value={tier}>{tier}</option>
+      {/each}
+      <option selected hidden>Tier Level (1 being most powerful)</option>
+    </select>
+
+    <select class="inputfield" bind:value={selectedCharacterClass}>
       <!-- <option disable selected hidden value="">Select a Character Class</option> -->
-      <option value="Ancient One">Ancient One</option>
-      <option value="Military Grunt">Military Grunt</option>
-      <option value="Artifactor">Artifactor</option>
-      <option value="Medic/Healer">Medic / Healer</option>
-      <option value="Diplomat/Linquist">Diplomat / Linquist</option>
-      <option value="NPC" selected>Non-Player Character</option>
+      <option value={CharacterFactory.ancientOne}
+        >{CharacterFactory.ancientOne.label}</option
+      >
+      <option value={CharacterFactory.militaryGrunt}
+        >{CharacterFactory.militaryGrunt.label}</option
+      >
+      <option value={CharacterFactory.artificer}
+        >{CharacterFactory.artificer.label}</option
+      >
+      <option value={CharacterFactory.medicHealer}
+        >{CharacterFactory.medicHealer.label}</option
+      >
+      <option value={CharacterFactory.diplomatLinguist}
+        >{CharacterFactory.diplomatLinguist.label}</option
+      >
+      <option value={CharacterFactory.npc} selected
+        >{CharacterFactory.npc.label}</option
+      >
     </select>
 
     <input type="submit" value="Create Character" />
   </form>
 
   {#each Object.keys($characters).reverse() as key}
-  <CharacterCard 
-    name={$characters[key].name} 
-    inventory={$characters[key].inventory} 
-    characterClass={$characters[key].characterClass} 
-    inventoryLoadingMessage={$characters[key].inventoryLoadingMessage} 
-  />
+    <CharacterCard
+      name={$characters[key].name}
+      inventory={$characters[key].inventory}
+      incantations={$characters[key].incantations}
+      characterClass={$characters[key].characterClass}
+      inventoryLoadingMessage={$characters[key].inventoryLoadingMessage}
+    />
   {/each}
 </div>
 

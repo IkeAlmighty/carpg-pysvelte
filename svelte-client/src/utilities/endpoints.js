@@ -8,7 +8,7 @@ const fetchTags = (tagType) => {
 const stringifyTags = (tags) => {
   let tagsString = undefined;
   if (tags.length === 0) {
-    tagsString = "any";
+    tagsString = "any,none";
   } else {
     tagsString = tags.reduce((acc, curr) => {
       return acc + "," + curr;
@@ -25,9 +25,11 @@ const fetchItems = (limit, spellchance, tags, seed) => {
   );
 };
 
-const fetchSpells = (limit, tags) => {
+const fetchSpells = (limit, tags, onlyincantations) => {
   return axios.get(
-    `_ENV_API_URI/spells?limit=${limit}&tags=${stringifyTags(tags)}`
+    `_ENV_API_URI/spells?limit=${limit}&onlyincantations=${onlyincantations}&tags=${stringifyTags(
+      tags
+    )}`
   );
 };
 

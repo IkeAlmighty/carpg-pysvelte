@@ -51,12 +51,12 @@ def rand_tagged_items(valid_tags, limit=None):
     for item in all_basic_items:
         item_tags = item[4].split(',')
         for item_tag in item_tags:
-            print()
-            if item_tag.strip() in valid_tags:
-               valid_items.append(item)
-               break
-    
+            if item_tag.strip() in valid_tags or 'none' in valid_tags:
+                valid_items.append(item)
+                break
+
     return rand_values(valid_items, limit=limit)
+
 
 def rand_tagged_spells(valid_tags, limit=None, only_incantations=False):
     # get all spells:
@@ -68,7 +68,7 @@ def rand_tagged_spells(valid_tags, limit=None, only_incantations=False):
     for spell in all_spells:
         spell_tags = spell[4].split(',')
         for spell_tag in spell_tags:
-            if spell_tag.strip() in valid_tags:
+            if spell_tag.strip() in valid_tags or "any" in valid_tags:
                 if only_incantations and spell[2] == 'y':
                     valid_spells.append(spell)
                     break
@@ -77,6 +77,8 @@ def rand_tagged_spells(valid_tags, limit=None, only_incantations=False):
                     break
 
     return rand_values(valid_spells, limit=limit)
+
+
 '''
     Returns random values within a max limit.
 '''
