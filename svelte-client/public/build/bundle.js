@@ -506,7 +506,7 @@ var app = (function () {
     }
 
     // (26:4) {#if menuIsVisible}
-    function create_if_block$6(ctx) {
+    function create_if_block$7(ctx) {
     	let div;
     	let each_value = /*options*/ ctx[0];
     	validate_each_argument(each_value);
@@ -567,7 +567,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$6.name,
+    		id: create_if_block$7.name,
     		type: "if",
     		source: "(26:4) {#if menuIsVisible}",
     		ctx
@@ -640,7 +640,7 @@ var app = (function () {
 
     	let current_block_type = select_block_type(ctx);
     	let if_block0 = current_block_type(ctx);
-    	let if_block1 = /*menuIsVisible*/ ctx[1] && create_if_block$6(ctx);
+    	let if_block1 = /*menuIsVisible*/ ctx[1] && create_if_block$7(ctx);
 
     	const block = {
     		c: function create() {
@@ -684,7 +684,7 @@ var app = (function () {
     				if (if_block1) {
     					if_block1.p(ctx, dirty);
     				} else {
-    					if_block1 = create_if_block$6(ctx);
+    					if_block1 = create_if_block$7(ctx);
     					if_block1.c();
     					if_block1.m(div, null);
     				}
@@ -959,7 +959,7 @@ var app = (function () {
     }
 
     // (50:4) {#if item[5]}
-    function create_if_block$5(ctx) {
+    function create_if_block$6(ctx) {
     	let strong;
     	let t1;
     	let t2_value = /*item*/ ctx[0][5][0] + "";
@@ -990,7 +990,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$5.name,
+    		id: create_if_block$6.name,
     		type: "if",
     		source: "(50:4) {#if item[5]}",
     		ctx
@@ -1017,7 +1017,7 @@ var app = (function () {
     	let if_block0 = /*isWeapon*/ ctx[1] && create_if_block_3(ctx);
     	let if_block1 = show_if_1 && create_if_block_2$2(ctx);
     	let if_block2 = show_if && create_if_block_1$4(ctx);
-    	let if_block3 = /*item*/ ctx[0][5] && create_if_block$5(ctx);
+    	let if_block3 = /*item*/ ctx[0][5] && create_if_block$6(ctx);
 
     	const block = {
     		c: function create() {
@@ -1118,7 +1118,7 @@ var app = (function () {
     				if (if_block3) {
     					if_block3.p(ctx, dirty);
     				} else {
-    					if_block3 = create_if_block$5(ctx);
+    					if_block3 = create_if_block$6(ctx);
     					if_block3.c();
     					if_block3.m(div3, null);
     				}
@@ -1626,7 +1626,7 @@ var app = (function () {
     }
 
     // (45:4) {#if incantations && incantations.length > 0}
-    function create_if_block$4(ctx) {
+    function create_if_block$5(ctx) {
     	let u;
     	let t1;
     	let each_1_anchor;
@@ -1725,7 +1725,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$4.name,
+    		id: create_if_block$5.name,
     		type: "if",
     		source: "(45:4) {#if incantations && incantations.length > 0}",
     		ctx
@@ -1802,7 +1802,7 @@ var app = (function () {
     	let dispose;
     	let if_block0 = /*inventoryLoadingMessage*/ ctx[4] && create_if_block_2$1(ctx);
     	let if_block1 = /*inventory*/ ctx[1] && /*inventory*/ ctx[1].length > 0 && create_if_block_1$3(ctx);
-    	let if_block2 = /*incantations*/ ctx[2] && /*incantations*/ ctx[2].length > 0 && create_if_block$4(ctx);
+    	let if_block2 = /*incantations*/ ctx[2] && /*incantations*/ ctx[2].length > 0 && create_if_block$5(ctx);
 
     	const block = {
     		c: function create() {
@@ -1913,7 +1913,7 @@ var app = (function () {
     						transition_in(if_block2, 1);
     					}
     				} else {
-    					if_block2 = create_if_block$4(ctx);
+    					if_block2 = create_if_block$5(ctx);
     					if_block2.c();
     					transition_in(if_block2, 1);
     					if_block2.m(div3, null);
@@ -25867,7 +25867,79 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (34:6) {#each [1, 2, 3, 4, 5] as tier}
+    // (32:4) {#if selectedCharacterClass === CharacterFactory.npc}
+    function create_if_block$4(ctx) {
+    	let select;
+    	let option;
+    	let mounted;
+    	let dispose;
+    	let each_value_1 = [1, 2, 3, 4, 5];
+    	validate_each_argument(each_value_1);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < 5; i += 1) {
+    		each_blocks[i] = create_each_block_1$2(get_each_context_1$2(ctx, each_value_1, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			select = element("select");
+
+    			for (let i = 0; i < 5; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			option = element("option");
+    			option.textContent = "Tier Level (1 being most powerful)";
+    			option.selected = true;
+    			option.hidden = true;
+    			option.__value = "Tier Level (1 being most powerful)";
+    			option.value = option.__value;
+    			add_location(option, file$4, 36, 8, 1117);
+    			attr_dev(select, "class", "inputfield svelte-jcd720");
+    			if (/*selectedTier*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[6].call(select));
+    			add_location(select, file$4, 32, 6, 948);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, select, anchor);
+
+    			for (let i = 0; i < 5; i += 1) {
+    				each_blocks[i].m(select, null);
+    			}
+
+    			append_dev(select, option);
+    			select_option(select, /*selectedTier*/ ctx[2]);
+
+    			if (!mounted) {
+    				dispose = listen_dev(select, "change", /*select_change_handler*/ ctx[6]);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*selectedTier*/ 4) {
+    				select_option(select, /*selectedTier*/ ctx[2]);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(select);
+    			destroy_each(each_blocks, detaching);
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$4.name,
+    		type: "if",
+    		source: "(32:4) {#if selectedCharacterClass === CharacterFactory.npc}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (34:8) {#each [1, 2, 3, 4, 5] as tier}
     function create_each_block_1$2(ctx) {
     	let option;
     	let t;
@@ -25878,7 +25950,7 @@ var app = (function () {
     			t = text(/*tier*/ ctx[11]);
     			option.__value = /*tier*/ ctx[11];
     			option.value = option.__value;
-    			add_location(option, file$4, 34, 8, 1020);
+    			add_location(option, file$4, 34, 10, 1054);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
@@ -25894,14 +25966,14 @@ var app = (function () {
     		block,
     		id: create_each_block_1$2.name,
     		type: "each",
-    		source: "(34:6) {#each [1, 2, 3, 4, 5] as tier}",
+    		source: "(34:8) {#each [1, 2, 3, 4, 5] as tier}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (65:2) {#each Object.keys($characters).reverse() as key}
+    // (64:2) {#each Object.keys($characters).reverse() as key}
     function create_each_block$2(ctx) {
     	let charactercard;
     	let current;
@@ -25952,7 +26024,7 @@ var app = (function () {
     		block,
     		id: create_each_block$2.name,
     		type: "each",
-    		source: "(65:2) {#each Object.keys($characters).reverse() as key}",
+    		source: "(64:2) {#each Object.keys($characters).reverse() as key}",
     		ctx
     	});
 
@@ -25966,42 +26038,33 @@ var app = (function () {
     	let form;
     	let input0;
     	let t2;
-    	let select0;
+    	let t3;
+    	let select;
     	let option0;
+    	let t4_value = CharacterFactory.ancientOne.label + "";
     	let t4;
-    	let select1;
     	let option1;
-    	let t5_value = CharacterFactory.ancientOne.label + "";
+    	let t5_value = CharacterFactory.militaryGrunt.label + "";
     	let t5;
     	let option2;
-    	let t6_value = CharacterFactory.militaryGrunt.label + "";
+    	let t6_value = CharacterFactory.artificer.label + "";
     	let t6;
     	let option3;
-    	let t7_value = CharacterFactory.artificer.label + "";
+    	let t7_value = CharacterFactory.medicHealer.label + "";
     	let t7;
     	let option4;
-    	let t8_value = CharacterFactory.medicHealer.label + "";
+    	let t8_value = CharacterFactory.diplomatLinguist.label + "";
     	let t8;
     	let option5;
-    	let t9_value = CharacterFactory.diplomatLinguist.label + "";
+    	let t9_value = CharacterFactory.npc.label + "";
     	let t9;
-    	let option6;
-    	let t10_value = CharacterFactory.npc.label + "";
     	let t10;
-    	let t11;
     	let input1;
-    	let t12;
+    	let t11;
     	let current;
     	let mounted;
     	let dispose;
-    	let each_value_1 = [1, 2, 3, 4, 5];
-    	validate_each_argument(each_value_1);
-    	let each_blocks_1 = [];
-
-    	for (let i = 0; i < 5; i += 1) {
-    		each_blocks_1[i] = create_each_block_1$2(get_each_context_1$2(ctx, each_value_1, i));
-    	}
-
+    	let if_block = /*selectedCharacterClass*/ ctx[1] === CharacterFactory.npc && create_if_block$4(ctx);
     	let each_value = Object.keys(/*$characters*/ ctx[3]).reverse();
     	validate_each_argument(each_value);
     	let each_blocks = [];
@@ -26023,16 +26086,11 @@ var app = (function () {
     			form = element("form");
     			input0 = element("input");
     			t2 = space();
-    			select0 = element("select");
-
-    			for (let i = 0; i < 5; i += 1) {
-    				each_blocks_1[i].c();
-    			}
-
+    			if (if_block) if_block.c();
+    			t3 = space();
+    			select = element("select");
     			option0 = element("option");
-    			option0.textContent = "Tier Level (1 being most powerful)";
-    			t4 = space();
-    			select1 = element("select");
+    			t4 = text(t4_value);
     			option1 = element("option");
     			t5 = text(t5_value);
     			option2 = element("option");
@@ -26043,57 +26101,46 @@ var app = (function () {
     			t8 = text(t8_value);
     			option5 = element("option");
     			t9 = text(t9_value);
-    			option6 = element("option");
-    			t10 = text(t10_value);
-    			t11 = space();
+    			t10 = space();
     			input1 = element("input");
-    			t12 = space();
+    			t11 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			add_location(h1, file$4, 23, 2, 689);
+    			add_location(h1, file$4, 23, 2, 660);
     			attr_dev(input0, "class", "inputfield svelte-jcd720");
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "placeholder", "Character Name (Currently Randomized)");
-    			add_location(input0, file$4, 25, 4, 759);
-    			option0.selected = true;
-    			option0.hidden = true;
-    			option0.__value = "Tier Level (1 being most powerful)";
+    			add_location(input0, file$4, 25, 4, 730);
+    			option0.__value = CharacterFactory.ancientOne;
     			option0.value = option0.__value;
-    			add_location(option0, file$4, 36, 6, 1079);
-    			attr_dev(select0, "class", "inputfield svelte-jcd720");
-    			if (/*selectedTier*/ ctx[2] === void 0) add_render_callback(() => /*select0_change_handler*/ ctx[6].call(select0));
-    			add_location(select0, file$4, 32, 4, 918);
-    			option1.__value = CharacterFactory.ancientOne;
+    			add_location(option0, file$4, 42, 6, 1382);
+    			option1.__value = CharacterFactory.militaryGrunt;
     			option1.value = option1.__value;
-    			add_location(option1, file$4, 41, 6, 1331);
-    			option2.__value = CharacterFactory.militaryGrunt;
+    			add_location(option1, file$4, 45, 6, 1496);
+    			option2.__value = CharacterFactory.artificer;
     			option2.value = option2.__value;
-    			add_location(option2, file$4, 44, 6, 1445);
-    			option3.__value = CharacterFactory.artificer;
+    			add_location(option2, file$4, 48, 6, 1616);
+    			option3.__value = CharacterFactory.medicHealer;
     			option3.value = option3.__value;
-    			add_location(option3, file$4, 47, 6, 1565);
-    			option4.__value = CharacterFactory.medicHealer;
+    			add_location(option3, file$4, 51, 6, 1728);
+    			option4.__value = CharacterFactory.diplomatLinguist;
     			option4.value = option4.__value;
-    			add_location(option4, file$4, 50, 6, 1677);
-    			option5.__value = CharacterFactory.diplomatLinguist;
+    			add_location(option4, file$4, 54, 6, 1844);
+    			option5.__value = CharacterFactory.npc;
     			option5.value = option5.__value;
-    			add_location(option5, file$4, 53, 6, 1793);
-    			option6.__value = CharacterFactory.npc;
-    			option6.value = option6.__value;
-    			option6.selected = true;
-    			add_location(option6, file$4, 56, 6, 1919);
-    			attr_dev(select1, "class", "inputfield svelte-jcd720");
-    			if (/*selectedCharacterClass*/ ctx[1] === void 0) add_render_callback(() => /*select1_change_handler*/ ctx[7].call(select1));
-    			add_location(select1, file$4, 39, 4, 1169);
+    			add_location(option5, file$4, 57, 6, 1970);
+    			attr_dev(select, "class", "inputfield svelte-jcd720");
+    			if (/*selectedCharacterClass*/ ctx[1] === void 0) add_render_callback(() => /*select_change_handler_1*/ ctx[7].call(select));
+    			add_location(select, file$4, 40, 4, 1220);
     			attr_dev(input1, "type", "submit");
     			input1.value = "Create Character";
-    			add_location(input1, file$4, 61, 4, 2043);
-    			add_location(form, file$4, 24, 2, 719);
+    			add_location(input1, file$4, 60, 4, 2067);
+    			add_location(form, file$4, 24, 2, 690);
     			attr_dev(div, "class", "container");
-    			add_location(div, file$4, 22, 0, 662);
+    			add_location(div, file$4, 22, 0, 633);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -26106,32 +26153,25 @@ var app = (function () {
     			append_dev(form, input0);
     			set_input_value(input0, /*selectedName*/ ctx[0]);
     			append_dev(form, t2);
-    			append_dev(form, select0);
-
-    			for (let i = 0; i < 5; i += 1) {
-    				each_blocks_1[i].m(select0, null);
-    			}
-
-    			append_dev(select0, option0);
-    			select_option(select0, /*selectedTier*/ ctx[2]);
-    			append_dev(form, t4);
-    			append_dev(form, select1);
-    			append_dev(select1, option1);
+    			if (if_block) if_block.m(form, null);
+    			append_dev(form, t3);
+    			append_dev(form, select);
+    			append_dev(select, option0);
+    			append_dev(option0, t4);
+    			append_dev(select, option1);
     			append_dev(option1, t5);
-    			append_dev(select1, option2);
+    			append_dev(select, option2);
     			append_dev(option2, t6);
-    			append_dev(select1, option3);
+    			append_dev(select, option3);
     			append_dev(option3, t7);
-    			append_dev(select1, option4);
+    			append_dev(select, option4);
     			append_dev(option4, t8);
-    			append_dev(select1, option5);
+    			append_dev(select, option5);
     			append_dev(option5, t9);
-    			append_dev(select1, option6);
-    			append_dev(option6, t10);
-    			select_option(select1, /*selectedCharacterClass*/ ctx[1]);
-    			append_dev(form, t11);
+    			select_option(select, /*selectedCharacterClass*/ ctx[1]);
+    			append_dev(form, t10);
     			append_dev(form, input1);
-    			append_dev(div, t12);
+    			append_dev(div, t11);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(div, null);
@@ -26142,8 +26182,7 @@ var app = (function () {
     			if (!mounted) {
     				dispose = [
     					listen_dev(input0, "input", /*input0_input_handler*/ ctx[5]),
-    					listen_dev(select0, "change", /*select0_change_handler*/ ctx[6]),
-    					listen_dev(select1, "change", /*select1_change_handler*/ ctx[7]),
+    					listen_dev(select, "change", /*select_change_handler_1*/ ctx[7]),
     					listen_dev(form, "submit", /*createCharacter*/ ctx[4], false, false, false)
     				];
 
@@ -26155,12 +26194,21 @@ var app = (function () {
     				set_input_value(input0, /*selectedName*/ ctx[0]);
     			}
 
-    			if (dirty & /*selectedTier*/ 4) {
-    				select_option(select0, /*selectedTier*/ ctx[2]);
+    			if (/*selectedCharacterClass*/ ctx[1] === CharacterFactory.npc) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block$4(ctx);
+    					if_block.c();
+    					if_block.m(form, t3);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
     			}
 
     			if (dirty & /*selectedCharacterClass, CharacterFactory*/ 2) {
-    				select_option(select1, /*selectedCharacterClass*/ ctx[1]);
+    				select_option(select, /*selectedCharacterClass*/ ctx[1]);
     			}
 
     			if (dirty & /*$characters, Object*/ 8) {
@@ -26211,7 +26259,7 @@ var app = (function () {
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
-    			destroy_each(each_blocks_1, detaching);
+    			if (if_block) if_block.d();
     			destroy_each(each_blocks, detaching);
     			mounted = false;
     			run_all(dispose);
@@ -26236,14 +26284,14 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("Characters", slots, []);
     	let selectedName;
-    	let selectedCharacterClass = CharacterFactory.artificer;
+    	let selectedCharacterClass = CharacterFactory.npc;
     	let selectedTier;
 
     	const createCharacter = e => {
     		e.preventDefault();
     		let name = selectedName; // reset allows us to click create multiple in a row before the first is loaded
     		$$invalidate(0, selectedName = undefined);
-    		let tier = parseInt(selectedTier) ? parseInt(selectedTier) : 5; // TODO: impl in forms
+    		let tier = parseInt(selectedTier) ? parseInt(selectedTier) : 5;
     		selectedCharacterClass.generate(name, tier);
     	};
 
@@ -26258,12 +26306,12 @@ var app = (function () {
     		$$invalidate(0, selectedName);
     	}
 
-    	function select0_change_handler() {
+    	function select_change_handler() {
     		selectedTier = select_value(this);
     		$$invalidate(2, selectedTier);
     	}
 
-    	function select1_change_handler() {
+    	function select_change_handler_1() {
     		selectedCharacterClass = select_value(this);
     		$$invalidate(1, selectedCharacterClass);
     	}
@@ -26296,8 +26344,8 @@ var app = (function () {
     		$characters,
     		createCharacter,
     		input0_input_handler,
-    		select0_change_handler,
-    		select1_change_handler
+    		select_change_handler,
+    		select_change_handler_1
     	];
     }
 

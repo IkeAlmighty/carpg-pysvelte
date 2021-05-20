@@ -5,7 +5,7 @@
   import { characters } from "../stores";
 
   let selectedName;
-  let selectedCharacterClass = CharacterFactory.artificer;
+  let selectedCharacterClass = CharacterFactory.npc;
   let selectedTier;
 
   const createCharacter = (e) => {
@@ -14,7 +14,7 @@
     let name = selectedName; // reset allows us to click create multiple in a row before the first is loaded
     selectedName = undefined;
 
-    let tier = parseInt(selectedTier) ? parseInt(selectedTier) : 5; // TODO: impl in forms
+    let tier = parseInt(selectedTier) ? parseInt(selectedTier) : 5;
 
     selectedCharacterClass.generate(name, tier);
   };
@@ -29,13 +29,14 @@
       type="text"
       placeholder="Character Name (Currently Randomized)"
     />
-
-    <select class="inputfield" bind:value={selectedTier}>
-      {#each [1, 2, 3, 4, 5] as tier}
-        <option value={tier}>{tier}</option>
-      {/each}
-      <option selected hidden>Tier Level (1 being most powerful)</option>
-    </select>
+    {#if selectedCharacterClass === CharacterFactory.npc}
+      <select class="inputfield" bind:value={selectedTier}>
+        {#each [1, 2, 3, 4, 5] as tier}
+          <option value={tier}>{tier}</option>
+        {/each}
+        <option selected hidden>Tier Level (1 being most powerful)</option>
+      </select>
+    {/if}
 
     <select class="inputfield" bind:value={selectedCharacterClass}>
       <!-- <option disable selected hidden value="">Select a Character Class</option> -->
@@ -54,9 +55,7 @@
       <option value={CharacterFactory.diplomatLinguist}
         >{CharacterFactory.diplomatLinguist.label}</option
       >
-      <option value={CharacterFactory.npc} selected
-        >{CharacterFactory.npc.label}</option
-      >
+      <option value={CharacterFactory.npc}>{CharacterFactory.npc.label}</option>
     </select>
 
     <input type="submit" value="Create Character" />
