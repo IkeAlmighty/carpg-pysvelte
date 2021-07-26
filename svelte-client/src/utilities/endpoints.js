@@ -41,10 +41,18 @@ const fetchTranslation = (text, seed) => {
   return axios.get(`_ENV_API_URI/translate?text=${text}&seed=${seed}`);
 };
 
+const fetchRules = () => {
+  // return axios.get(`ENV_API_URI/rules`);
+  return axios.get(
+    "https://docs.googleapis.com/v1/documents/1SVGhe15qIAoNtpIjSl6rLovofYXPrDpKcl1pQtiMhZk"
+  );
+};
+
 export {
   fetchTags,
   fetchItems,
   fetchSpells,
   fetchTranslation,
   fetchIncantations,
+  fetchRules,
 };
